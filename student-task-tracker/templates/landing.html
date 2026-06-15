@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyTrack — Your Academic Command Center</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --accent: #7c5cfc;
+            --accent2: #f953c6;
+            --accent3: #0acffe;
+            --grad1: linear-gradient(135deg, #7c5cfc, #f953c6);
+            --grad2: linear-gradient(135deg, #0acffe, #7c5cfc);
+            --grad3: linear-gradient(135deg, #f953c6, #ff6b6b);
+            --grad4: linear-gradient(135deg, #43e97b, #38f9d7);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0815;
+            color: #f0eeff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ── BACKGROUND ── */
+        .bg-blobs {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.35;
+            animation: float 8s ease-in-out infinite alternate;
+        }
+        .blob-1 { width: 600px; height: 600px; background: #7c5cfc; top: -150px; left: -150px; animation-duration: 9s; }
+        .blob-2 { width: 500px; height: 500px; background: #f953c6; bottom: -100px; right: -100px; animation-duration: 11s; animation-delay: -3s; }
+        .blob-3 { width: 400px; height: 400px; background: #0acffe; top: 40%; left: 50%; animation-duration: 13s; animation-delay: -6s; opacity: 0.2; }
+        @keyframes float { to { transform: translate(40px, 30px) scale(1.08); } }
+
+        /* ── NAVBAR ── */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 48px;
+            background: rgba(10,8,21,0.7);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(124,92,252,0.15);
+        }
+        .nav-logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            background: var(--grad1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .nav-links { display: flex; gap: 32px; align-items: center; }
+        .nav-links a {
+            color: rgba(240,238,255,0.6);
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: #f0eeff; }
+        .nav-cta {
+            background: var(--grad1);
+            color: #fff !important;
+            padding: 9px 22px;
+            border-radius: 50px;
+            font-weight: 600 !important;
+            font-size: 0.85rem !important;
+            box-shadow: 0 4px 20px rgba(124,92,252,0.4);
+            transition: all 0.3s !important;
+        }
+        .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(124,92,252,0.5) !important; filter: brightness(1.1); }
+
+        /* ── HERO ── */
+        .hero {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 120px 24px 80px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(124,92,252,0.15);
+            border: 1px solid rgba(124,92,252,0.3);
+            border-radius: 50px;
+            padding: 8px 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #c4b5fd;
+            margin-bottom: 32px;
+            letter-spacing: 0.5px;
+            animation: fadeDown 0.6s ease both;
+        }
+        .hero-badge span { width: 6px; height: 6px; background: #7c5cfc; border-radius: 50%; display: inline-block; animation: ping 1.5s ease infinite; }
+        @keyframes ping { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.4); } }
+
+        .hero-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2.8rem, 7vw, 5.5rem);
+            font-weight: 700;
+            line-height: 1.08;
+            letter-spacing: -2px;
+            margin-bottom: 24px;
+            animation: fadeDown 0.6s ease 0.1s both;
+        }
+        .hero-title .line1 { display: block; color: #f0eeff; }
+        .hero-title .line2 {
+            display: block;
+            background: var(--grad1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-sub {
+            font-size: 1.1rem;
+            color: rgba(240,238,255,0.55);
+            max-width: 520px;
+            line-height: 1.7;
+            margin-bottom: 48px;
+            font-weight: 400;
+            animation: fadeDown 0.6s ease 0.2s both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 72px;
+            animation: fadeDown 0.6s ease 0.3s both;
+        }
+
+        .btn-launch {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--grad1);
+            color: #fff;
+            text-decoration: none;
+            padding: 16px 36px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: 0 8px 32px rgba(124,92,252,0.45);
+            transition: all 0.3s;
+            letter-spacing: 0.2px;
+        }
+        .btn-launch:hover { transform: translateY(-3px); box-shadow: 0 16px 48px rgba(124,92,252,0.6); filter: brightness(1.1); }
+        .btn-launch .arrow { transition: transform 0.3s; }
+        .btn-launch:hover .arrow { transform: translateX(4px); }
+
+        .btn-outline {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: transparent;
+            color: #f0eeff;
+            text-decoration: none;
+            padding: 15px 32px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border: 1.5px solid rgba(124,92,252,0.35);
+            transition: all 0.3s;
+        }
+        .btn-outline:hover { background: rgba(124,92,252,0.1); border-color: var(--accent); transform: translateY(-2px); }
+
+        @keyframes fadeDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── MOCK APP PREVIEW ── */
+        .preview-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 780px;
+            margin: 0 auto;
+            animation: fadeUp 0.8s ease 0.4s both;
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .preview-glow {
+            position: absolute;
+            inset: -40px;
+            background: radial-gradient(ellipse at center, rgba(124,92,252,0.25), transparent 70%);
+            pointer-events: none;
+        }
+        .preview-card {
+            background: rgba(20,16,40,0.9);
+            border: 1px solid rgba(124,92,252,0.25);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 32px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(124,92,252,0.1);
+        }
+        .preview-topbar {
+            background: rgba(30,24,55,0.95);
+            border-bottom: 1px solid rgba(124,92,252,0.15);
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
+        .dot-r { background: #ff5f57; }
+        .dot-y { background: #febc2e; }
+        .dot-g { background: #28c840; }
+        .preview-url {
+            flex: 1;
+            background: rgba(124,92,252,0.1);
+            border: 1px solid rgba(124,92,252,0.15);
+            border-radius: 8px;
+            padding: 6px 14px;
+            font-size: 0.75rem;
+            color: rgba(240,238,255,0.4);
+            font-family: monospace;
+        }
+        .preview-body { padding: 24px; }
+
+        /* Mini stats inside preview */
+        .mini-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+        .mini-stat {
+            background: rgba(124,92,252,0.08);
+            border: 1px solid rgba(124,92,252,0.15);
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+        }
+        .mini-stat-num {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            background: var(--grad1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .mini-stat-label { font-size: 0.65rem; color: rgba(240,238,255,0.4); margin-top: 2px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        /* Mini task cards */
+        .mini-tasks { display: flex; flex-direction: column; gap: 10px; }
+        .mini-task {
+            background: rgba(30,24,55,0.7);
+            border: 1px solid rgba(124,92,252,0.12);
+            border-radius: 10px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .mini-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+        .mini-dot.high { background: #ef4444; box-shadow: 0 0 6px #ef4444; }
+        .mini-dot.med { background: #f59e0b; box-shadow: 0 0 6px #f59e0b; }
+        .mini-dot.low { background: #22c55e; box-shadow: 0 0 6px #22c55e; }
+        .mini-task-text { flex: 1; }
+        .mini-task-title { font-size: 0.8rem; font-weight: 600; color: #f0eeff; }
+        .mini-task-sub { font-size: 0.68rem; color: rgba(240,238,255,0.4); margin-top: 2px; }
+        .mini-badge {
+            font-size: 0.65rem;
+            padding: 2px 10px;
+            border-radius: 50px;
+            font-weight: 600;
+        }
+        .mini-badge.pending { background: rgba(245,158,11,0.15); color: #f59e0b; }
+        .mini-badge.progress { background: rgba(10,207,254,0.12); color: #0acffe; }
+        .mini-badge.done { background: rgba(34,197,94,0.12); color: #22c55e; }
+
+        /* ── FEATURES ── */
+        .features {
+            position: relative;
+            z-index: 1;
+            padding: 100px 24px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .section-label {
+            text-align: center;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            background: var(--grad2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+        }
+        .section-title {
+            text-align: center;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 700;
+            letter-spacing: -1px;
+            margin-bottom: 60px;
+            color: #f0eeff;
+        }
+        .section-title span {
+            background: var(--grad1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .feature-card {
+            background: rgba(20,16,40,0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(124,92,252,0.15);
+            border-radius: 20px;
+            padding: 28px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .feature-card:nth-child(1)::before { background: var(--grad1); }
+        .feature-card:nth-child(2)::before { background: var(--grad2); }
+        .feature-card:nth-child(3)::before { background: var(--grad3); }
+        .feature-card:nth-child(4)::before { background: var(--grad4); }
+        .feature-card:nth-child(5)::before { background: var(--grad1); }
+        .feature-card:nth-child(6)::before { background: var(--grad2); }
+        .feature-card:hover { transform: translateY(-6px); border-color: rgba(124,92,252,0.3); box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+        .feature-card:hover::before { opacity: 1; }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 16px;
+            display: block;
+        }
+        .feature-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #f0eeff;
+        }
+        .feature-desc {
+            font-size: 0.85rem;
+            color: rgba(240,238,255,0.5);
+            line-height: 1.6;
+        }
+
+        /* ── TEAM ── */
+        .team {
+            position: relative;
+            z-index: 1;
+            padding: 80px 24px;
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .team-grid {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 48px;
+        }
+        .team-card {
+            background: rgba(20,16,40,0.7);
+            border: 1px solid rgba(124,92,252,0.15);
+            border-radius: 16px;
+            padding: 20px 24px;
+            min-width: 140px;
+            transition: all 0.3s;
+        }
+        .team-card:hover { transform: translateY(-4px); border-color: rgba(124,92,252,0.35); box-shadow: 0 12px 40px rgba(124,92,252,0.15); }
+        .team-avatar {
+            width: 48px; height: 48px;
+            border-radius: 50%;
+            background: var(--grad1);
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 1.1rem;
+            margin: 0 auto 12px;
+            color: #fff;
+        }
+        .team-name { font-size: 0.82rem; font-weight: 600; color: #f0eeff; }
+        .team-role { font-size: 0.72rem; color: rgba(240,238,255,0.4); margin-top: 4px; }
+
+        /* ── CTA SECTION ── */
+        .cta-section {
+            position: relative;
+            z-index: 1;
+            padding: 80px 24px 120px;
+            text-align: center;
+        }
+        .cta-box {
+            max-width: 640px;
+            margin: 0 auto;
+            background: rgba(20,16,40,0.8);
+            border: 1px solid rgba(124,92,252,0.2);
+            border-radius: 28px;
+            padding: 60px 40px;
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+        }
+        .cta-box::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at top, rgba(124,92,252,0.12), transparent 60%);
+            pointer-events: none;
+        }
+        .cta-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 16px;
+            color: #f0eeff;
+        }
+        .cta-sub { font-size: 0.95rem; color: rgba(240,238,255,0.5); margin-bottom: 36px; line-height: 1.6; }
+
+        /* ── FOOTER ── */
+        footer {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 24px;
+            border-top: 1px solid rgba(124,92,252,0.1);
+            color: rgba(240,238,255,0.3);
+            font-size: 0.78rem;
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 700px) {
+            nav { padding: 14px 20px; }
+            .nav-links { display: none; }
+            .features-grid { grid-template-columns: 1fr; }
+            .mini-stats { grid-template-columns: repeat(2, 1fr); }
+            .hero-title { letter-spacing: -1px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- BG BLOBS -->
+<div class="bg-blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+</div>
+
+<!-- NAVBAR -->
+<nav>
+    <div class="nav-logo">📚 StudyTrack</div>
+    <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#team">Team</a>
+        <a href="/" class="nav-cta">Open App →</a>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-badge">
+        <span></span> Built for Amity University Students
+    </div>
+    <h1 class="hero-title">
+        <span class="line1">Never miss a</span>
+        <span class="line2">deadline again.</span>
+    </h1>
+    <p class="hero-sub">
+        StudyTrack is your all-in-one academic task manager. Add assignments, track deadlines, filter by subject — all in one beautiful dashboard.
+    </p>
+    <div class="hero-buttons">
+        <a href="/" class="btn-launch">
+            Launch App <span class="arrow">→</span>
+        </a>
+        <a href="#features" class="btn-outline">
+            See Features ↓
+        </a>
+    </div>
+
+    <!-- APP PREVIEW -->
+    <div class="preview-wrapper">
+        <div class="preview-glow"></div>
+        <div class="preview-card">
+            <div class="preview-topbar">
+                <div class="dot dot-r"></div>
+                <div class="dot dot-y"></div>
+                <div class="dot dot-g"></div>
+                <div class="preview-url">localhost:5000 — StudyTrack</div>
+            </div>
+            <div class="preview-body">
+                <div class="mini-stats">
+                    <div class="mini-stat">
+                        <div class="mini-stat-num">12</div>
+                        <div class="mini-stat-label">Total</div>
+                    </div>
+                    <div class="mini-stat">
+                        <div class="mini-stat-num" style="background:linear-gradient(135deg,#f953c6,#ff6b6b);-webkit-background-clip:text;background-clip:text;">5</div>
+                        <div class="mini-stat-label">Pending</div>
+                    </div>
+                    <div class="mini-stat">
+                        <div class="mini-stat-num" style="background:linear-gradient(135deg,#43e97b,#38f9d7);-webkit-background-clip:text;background-clip:text;">6</div>
+                        <div class="mini-stat-label">Done</div>
+                    </div>
+                    <div class="mini-stat">
+                        <div class="mini-stat-num" style="background:linear-gradient(135deg,#0acffe,#7c5cfc);-webkit-background-clip:text;background-clip:text;">1</div>
+                        <div class="mini-stat-label">Due Today</div>
+                    </div>
+                </div>
+                <div class="mini-tasks">
+                    <div class="mini-task">
+                        <div class="mini-dot high"></div>
+                        <div class="mini-task-text">
+                            <div class="mini-task-title">Submit CAO Assignment</div>
+                            <div class="mini-task-sub">CAO · 📅 2026-06-15</div>
+                        </div>
+                        <div class="mini-badge pending">Pending</div>
+                    </div>
+                    <div class="mini-task">
+                        <div class="mini-dot med"></div>
+                        <div class="mini-task-text">
+                            <div class="mini-task-title">FOAIML Project Report</div>
+                            <div class="mini-task-sub">FOAIML · 📅 2026-06-17</div>
+                        </div>
+                        <div class="mini-badge progress">In Progress</div>
+                    </div>
+                    <div class="mini-task">
+                        <div class="mini-dot low"></div>
+                        <div class="mini-task-text">
+                            <div class="mini-task-title">MAT1002 Laplace Practice</div>
+                            <div class="mini-task-sub">MAT1002 · 📅 2026-06-20</div>
+                        </div>
+                        <div class="mini-badge done">Completed</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+    <div class="section-label">What it does</div>
+    <h2 class="section-title">Everything you need to <span>stay on track</span></h2>
+    <div class="features-grid">
+        <div class="feature-card">
+            <span class="feature-icon">➕</span>
+            <div class="feature-title">Add & Manage Tasks</div>
+            <div class="feature-desc">Create tasks with title, subject, deadline, and priority. Edit or delete anytime with one click.</div>
+        </div>
+        <div class="feature-card">
+            <span class="feature-icon">⚠️</span>
+            <div class="feature-title">Deadline Reminders</div>
+            <div class="feature-desc">Auto-detects overdue and upcoming tasks and shows a reminder banner so you never miss a submission.</div>
+        </div>
+        <div class="feature-card">
+            <span class="feature-icon">🔍</span>
+            <div class="feature-title">Subject-wise Filter</div>
+            <div class="feature-desc">Filter your tasks by subject or status instantly. Find exactly what you need in seconds.</div>
+        </div>
+        <div class="feature-card">
+            <span class="feature-icon">🌙</span>
+            <div class="feature-title">Dark Mode</div>
+            <div class="feature-desc">Toggle between light and dark themes. Your preference is saved automatically for next time.</div>
+        </div>
+        <div class="feature-card">
+            <span class="feature-icon">📊</span>
+            <div class="feature-title">Live Stats Dashboard</div>
+            <div class="feature-desc">See your total, pending, completed, and due-today counts update in real time as you work.</div>
+        </div>
+        <div class="feature-card">
+            <span class="feature-icon">🐍</span>
+            <div class="feature-title">Python Flask Backend</div>
+            <div class="feature-desc">Built with Flask and SQLite. Your data is stored persistently — tasks survive app restarts.</div>
+        </div>
+    </div>
+</section>
+
+<!-- TEAM -->
+<section class="team" id="team">
+    <div class="section-label">The builders</div>
+    <h2 class="section-title">Meet <span>Team 3</span></h2>
+    <div class="team-grid">
+        <div class="team-card">
+            <div class="team-avatar">Y</div>
+            <div class="team-name">Yuvashree K A</div>
+            <div class="team-role">Lead Developer</div>
+        </div>
+        <div class="team-card">
+            <div class="team-avatar" style="background:linear-gradient(135deg,#f953c6,#ff6b6b)">P</div>
+            <div class="team-name">Poornima R</div>
+            <div class="team-role">Frontend</div>
+        </div>
+        <div class="team-card">
+            <div class="team-avatar" style="background:linear-gradient(135deg,#0acffe,#7c5cfc)">K</div>
+            <div class="team-name">Kruthi Ram R</div>
+            <div class="team-role">Filter & Logic</div>
+        </div>
+        <div class="team-card">
+            <div class="team-avatar" style="background:linear-gradient(135deg,#43e97b,#38f9d7)">S</div>
+            <div class="team-name">Sneha Mathew</div>
+            <div class="team-role">UI & Dark Mode</div>
+        </div>
+        <div class="team-card">
+            <div class="team-avatar" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">N</div>
+            <div class="team-name">Nandini R G</div>
+            <div class="team-role">Documentation</div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+    <div class="cta-box">
+        <div class="cta-title">Ready to get organised? 🚀</div>
+        <div class="cta-sub">Stop forgetting deadlines. Start tracking your tasks the smart way.</div>
+        <a href="/" class="btn-launch">Open StudyTrack →</a>
+    </div>
+</section>
+
+<footer>
+    StudyTrack · Team 3 · CSE2002 Web Technology · Amity University Bengaluru · 2026
+</footer>
+
+</body>
+</html>
