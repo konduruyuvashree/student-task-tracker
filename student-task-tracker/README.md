@@ -91,7 +91,7 @@ See [CONTRIBUTORS.md](CONTRIBUTORS.md)
 
 ## 🏫 Course Details
 
-**Course:** Web Technology (CSE2002)  
+**Course:** Source Code Management (L7+L8)
 **Institution:** Amity University Bengaluru  
 **Year:** 2025–2026
 
