@@ -234,10 +234,10 @@ async function loadSubjectFilter() {
     });
 }
 
-document.getElementById('applyFilter').addEventListener('click', async () => {
+document.getElementById('applyFilter').addEventListener('click', () => {
     const subject = document.getElementById('filterSubject').value;
     const status = document.getElementById('filterStatus').value;
-    await loadTasks(subject, status);
+    loadTasks(subject, status);
 });
 
 document.getElementById('clearFilter').addEventListener('click', () => {

@@ -1,10 +1,17 @@
 # Contributors — Team 3
 
+This project was developed as part of the Web Technology (CSE2002) course at Amity University Bengaluru.
+
+---
+
 | Name | Roll No | GitHub | Contribution |
 |------|---------|--------|--------------|
-| Yuvashree K A | | @konduruyuvashree | Project Lead — Flask backend, REST API, SQLite database, landing page, dark mode, full UI |
-| Poornima R | | | Add/Edit/Delete task forms |
-| Kruthi Ram R | | | Subject-wise filtering, deadline reminder |
-| Sneha Mathew | | | Dark mode CSS, responsive design, theme toggle |
-| Nandini R G | | | README documentation |
+| Yuvashree K A | | [@konduruyuvashree](https://github.com/konduruyuvashree) | Project lead, Flask backend, API development |
+| Poornima R | | | Add/Edit/Delete task functionality, form validation |
+| Kruthi Ram R | | | Subject-wise filtering, deadline reminder logic |
+| Sneha Mathew | | | Dark mode implementation, responsive CSS design |
+| Nandini R G | | | Documentation, README, testing, release management |
+
+---
+
 *All team members contributed to code review and final testing.*
