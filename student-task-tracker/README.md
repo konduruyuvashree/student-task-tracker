@@ -1,6 +1,7 @@
 # 📚 StudyTrack — Student Task Tracker
 
 A web-based task management application built for college students to track assignments, deadlines, and submission status across multiple subjects.
+Project built with Flask and SQLite
 
 ---
 
