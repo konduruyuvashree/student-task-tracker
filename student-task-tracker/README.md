@@ -87,7 +87,7 @@ student-task-tracker/
 
 ## 👥 Team Members
 Yuvashree K A
-poornima R
+Poornima R
 Kruthi Ram R
 Sneha Mathew
 Nandini R G
