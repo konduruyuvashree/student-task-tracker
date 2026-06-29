@@ -18,7 +18,7 @@ College students struggle to track assignments, deadlines, and submission status
 - 🔍 **Subject-wise Filtering** — Filter tasks by subject or status
 - 🌙 **Dark Mode** — Toggle between light and dark themes
 - 🐍 **Python Flask Backend** — REST API with SQLite database
-- 📊 **Live Stats Dashboard** — Total, Pending, Completed, Due Today
+- 📊 **Live Stats Dashboard** — Total, Pending, Completed, Due Today,Task Done
 
 ---
 
