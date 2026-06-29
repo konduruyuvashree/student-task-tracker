@@ -98,7 +98,7 @@ See [CONTRIBUTORS.md](CONTRIBUTORS.md)
 ## 🏫 Course Details
 
 **Course:** Source Code Management 
-**lab**(L7+L8)
+**lab:**(L7+L8)
 
 **Institution:** Amity University Bengaluru 
 **Year:** 2025–2026
