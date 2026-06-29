@@ -33,6 +33,7 @@ College students struggle to track assignments, deadlines, and submission status
 ---
 
 ## ⚙️ Setup Instructions
+Use Git Bash
 
 ### 1. Clone the Repository
 ```bash
