@@ -69,7 +69,7 @@ student-task-tracker/
 ├── templates/
 │   └── index.html       # Main UI
 ├── static/
-│   ├── css/style.css    # Styling + Dark mode
+│   ├── css/style.css    # Styling + Dark mode + high emphasis
 │   └── js/app.js        # Frontend logic
 └── screenshots/
     └── demo.png
