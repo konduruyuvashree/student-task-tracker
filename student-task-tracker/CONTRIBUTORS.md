@@ -7,7 +7,7 @@ This project was developed as part of the Web Technology (CSE2002) course at Ami
 | Name | Roll No | GitHub | Contribution |
 |------|---------|--------|--------------|
 | Yuvashree K A | | [@konduruyuvashree](https://github.com/konduruyuvashree) | Project lead, Flask backend, API development |
-| Poornima R |[A86605225275]| | Add/Edit/Delete task functionality, form validation |
+| Poornima R |[A86605225275]|[poornimaramamurthy355-eng] | Add/Edit/Delete task functionality, form validation |
 | Kruthi Ram R | | | Subject-wise filtering, deadline reminder logic |
 | Sneha Mathew | | | Dark mode implementation, responsive CSS design |
 | Nandini R G | | | Documentation, README, testing, release management |
