@@ -80,8 +80,12 @@ student-task-tracker/
 ---
 
 ## 🖼️ Screenshots
+<img width="1532" height="732" alt="image" src="https://github.com/user-attachments/assets/4eb3d9e0-7125-452a-83d0-70b994208495" />
+<img width="1536" height="707" alt="image" src="https://github.com/user-attachments/assets/8972b25c-2a9d-4f09-a63b-01d2b5bb8d01" />
 
-*(Add screenshots here after running the app)*
+
+
+
 
 ---
 
