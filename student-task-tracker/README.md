@@ -86,11 +86,6 @@ student-task-tracker/
 ---
 
 ## 👥 Team Members
-Yuvashree K A
-Poornima R
-Kruthi Ram R
-Sneha Mathew
-Nandini R G
 See [CONTRIBUTORS.md](CONTRIBUTORS.md)
 
 ---
