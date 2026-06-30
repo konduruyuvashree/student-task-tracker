@@ -82,6 +82,8 @@ student-task-tracker/
 ## 🖼️ Screenshots
 <img width="1532" height="732" alt="image" src="https://github.com/user-attachments/assets/4eb3d9e0-7125-452a-83d0-70b994208495" />
 <img width="1536" height="707" alt="image" src="https://github.com/user-attachments/assets/8972b25c-2a9d-4f09-a63b-01d2b5bb8d01" />
+<img width="1512" height="736" alt="image" src="https://github.com/user-attachments/assets/bbf097a5-c0cb-4f8a-ba96-46a3ee686e0c" />
+<img width="1521" height="700" alt="image" src="https://github.com/user-attachments/assets/6757e33f-7a4a-45ce-b0da-46fce54355ad" />
 
 
 
